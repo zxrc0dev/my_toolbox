@@ -1,12 +1,11 @@
 import re
-from sqlalchemy import create_engine, text
+from sqlalchemy import text
 from sqlalchemy.engine import URL
 
-def create_database(base_url: URL, db_name: str):
+
+def create_database(engine: URL, db_name: str):
     if not re.match(r'^[a-zA-Z0-9_]+$', db_name):
         raise ValueError("Invalid database name.")
-    
-    engine = create_engine(base_url.set(database="postgres"))
 
     with engine.connect().execution_options(isolation_level="AUTOCOMMIT") as conn:
 
